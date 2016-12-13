@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Napredni Google Zemljevid</title>
+    <style>
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 15px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 12px;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+        float: left;
+        width: 70%;
+        height: 100%;
+      }
+      #right-panel {
+        margin: 20px;
+        border-width: 2px;
+        width: 20%;
+        height: 400px;
+        float: left;
+        text-align: left;
+        padding-top: 0;
+      }
+      #directions-panel {
+        margin-top: 10px;
+        background-color: #FFEE77;
+        padding: 10px;
+      }
+    </style>
+        <title>jQuery UI Sortable - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+  #sortable li { margin: 0 6px 6px 6px; padding: 0.4em; padding-left: 1.4em; font-size: 1.4em; height: 30px; }
+  #sortable li span { position: absolute; margin-left: -1.3em; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  } );
+  </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="right-panel">
+    <div>
+    <b>Začetek:</b>
+    <select id="start">
+      <option value="Dravski Dvor">Dravski Dvor</option>
+      <option value="Maribor">Maribor</option>
+
+    </select>
+    <br>
+    <b>Vmesne točke:</b> <br>
+    <ul id="sortable">
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint1" id="waypoint1"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint2" id="waypoint2"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint3" id="waypoint3"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint4" id="waypoint4"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint5" id="waypoint5"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint6" id="waypoint6"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint6" id="waypoint7"></li>
+</ul>
+    <b>Konec:</b>
+    <select id="end">
+      <option value="Maribor">Maribor</option>
+      <option value="Dravski Dvor">Dravski Dvor</option>
+      
+    </select>
+    <br>
+      <input type="submit" id="route_submit" value="Izračunaj pot">
+      <input type="submit" id="optimal_submit" value="Optimalna pot">
+    </div>
+    <div id="directions-panel"></div>
+    </div>
+    <script>
+      var optimalRoute = false
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: {lat: 50.11, lng: 8.68}
+
+        });
+        directionsDisplay.setMap(map);
+
+        document.getElementById('route_submit').addEventListener('click', function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+        document.getElementById('optimal_submit').addEventListener('click', function() {
+          optimalRoute = true;
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+          optimalRoute = false;
+          
+        });
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        var waypts = [];
+        
+        
+        var wp1 = document.getElementById('waypoint1');
+        if (wp1.value != "") {
+            waypts.push({
+              location: wp1.value,
+              stopover: true
+            });
+
+        }
+	var wp2 = document.getElementById('waypoint2');
+        if (wp2.value != "") {
+            waypts.push({
+              location: wp2.value,
+              stopover: true
+            });
+
+        }
+        var wp3 = document.getElementById('waypoint3');
+        if (wp3.value != "") {
+            waypts.push({
+              location: wp3.value,
+              stopover: true
+            });
+
+        }
+        var wp4 = document.getElementById('waypoint4');
+        if (wp4.value != "") {
+            waypts.push({
+              location: wp4.value,
+              stopover: true
+            });
+
+        }
+        var wp5 = document.getElementById('waypoint5');
+        if (wp5.value != "") {
+            waypts.push({
+              location: wp5.value,
+              stopover: true
+            });
+
+        }
+        var wp6 = document.getElementById('waypoint6');
+        if (wp6.value != "") {
+            waypts.push({
+              location: wp6.value,
+              stopover: true
+            });
+
+        }
+
+        directionsService.route({
+          origin: document.getElementById('start').value,
+          destination: document.getElementById('end').value,
+          waypoints: waypts,
+          optimizeWaypoints: optimalRoute,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + '<strong> do </strong>';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+            }
+          } else {
+            window.alert('Napaka pri pripravi navodil ' + status);
+          }
+        });
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
+  </body>
+</html>
