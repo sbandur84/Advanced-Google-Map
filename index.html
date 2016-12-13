@@ -75,14 +75,14 @@
     <br>
     <b>Vmesne točke:</b> <br>
     <ul id="sortable">
-  <li ondrop="myScript" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint1" id="waypoint1"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint2" id="waypoint2"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint3" id="waypoint3"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint4" id="waypoint4"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint5" id="waypoint5"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint6"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint7"></li>
-</ul>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint1" id="waypoint1" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint2" id="waypoint2" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint3" id="waypoint3" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint4" id="waypoint4" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint5" id="waypoint5" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint6" text=""></li>
+	  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint7" text=""></li>
+   </ul>
     <b>Konec:</b>
     <select id="end">
       <option value="Maribor">Maribor</option>
@@ -114,7 +114,29 @@
           optimalRoute = false;
           
         });
+        
+        
+        
+        
+        // ADD ALL EVENT LISTENERS FOR EVERY DROPPABLE ITEM
+        wayPointsDrag = document.getElementById("sortable").childNodes;
+        for ( var i = 0; i < wayPointsDrag.length; i++)
+        {
+        		if (wayPointsDrag[i].className == "ui-state-default ui-sortable-handle") 
+        		{
+	        		wayPointsDrag[i].addEventListener('mouseup', function() {
+			          calculateAndDisplayRoute(directionsService, directionsDisplay);
+			        }); 
+			}       
+	}
+	
+	// prikaži prvo pot
+	calculateAndDisplayRoute(directionsService, directionsDisplay);
+        
       }
+      
+      
+      
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
         
@@ -159,7 +181,7 @@
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
     </script>
   </body>
 </html>
