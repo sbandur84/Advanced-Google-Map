@@ -10,15 +10,12 @@
         line-height: 30px;
         padding-left: 10px;
       }
-
       #right-panel select, #right-panel input {
         font-size: 15px;
       }
-
       #right-panel select {
         width: 100%;
       }
-
       #right-panel i {
         font-size: 12px;
       }
@@ -78,13 +75,13 @@
     <br>
     <b>Vmesne točke:</b> <br>
     <ul id="sortable">
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint1" id="waypoint1"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint2" id="waypoint2"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint3" id="waypoint3"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint4" id="waypoint4"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint5" id="waypoint5"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint6" id="waypoint6"></li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" name="waypoint6" id="waypoint7"></li>
+  <li ondrop="myScript" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint1" id="waypoint1"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint2" id="waypoint2"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint3" id="waypoint3"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint4" id="waypoint4"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint5" id="waypoint5"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint6"></li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input class="waypointInput" type="text" name="waypoint6" id="waypoint7"></li>
 </ul>
     <b>Konec:</b>
     <select id="end">
@@ -106,10 +103,8 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
           center: {lat: 50.11, lng: 8.68}
-
         });
         directionsDisplay.setMap(map);
-
         document.getElementById('route_submit').addEventListener('click', function() {
           calculateAndDisplayRoute(directionsService, directionsDisplay);
         });
@@ -120,60 +115,22 @@
           
         });
       }
-
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
         
+        wayPointsInput = document.getElementsByTagName("input");
+        for ( var i = 0; i < wayPointsInput.length; i++)
+        {
+        	if ( wayPointsInput[i].className == "waypointInput" && wayPointsInput[i].value != "" )
+        	{
+        		waypts.push({
+              			location: wayPointsInput[i].value,
+              			stopover: true
+        		});
+        	}
         
-        var wp1 = document.getElementById('waypoint1');
-        if (wp1.value != "") {
-            waypts.push({
-              location: wp1.value,
-              stopover: true
-            });
-
-        }
-	var wp2 = document.getElementById('waypoint2');
-        if (wp2.value != "") {
-            waypts.push({
-              location: wp2.value,
-              stopover: true
-            });
-
-        }
-        var wp3 = document.getElementById('waypoint3');
-        if (wp3.value != "") {
-            waypts.push({
-              location: wp3.value,
-              stopover: true
-            });
-
-        }
-        var wp4 = document.getElementById('waypoint4');
-        if (wp4.value != "") {
-            waypts.push({
-              location: wp4.value,
-              stopover: true
-            });
-
-        }
-        var wp5 = document.getElementById('waypoint5');
-        if (wp5.value != "") {
-            waypts.push({
-              location: wp5.value,
-              stopover: true
-            });
-
-        }
-        var wp6 = document.getElementById('waypoint6');
-        if (wp6.value != "") {
-            waypts.push({
-              location: wp6.value,
-              stopover: true
-            });
-
-        }
-
+	}
+        
         directionsService.route({
           origin: document.getElementById('start').value,
           destination: document.getElementById('end').value,
@@ -200,10 +157,9 @@
           }
         });
       }
-
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=MAPS_API_KEY&callback=initMap">
     </script>
   </body>
 </html>
